@@ -1,0 +1,67 @@
+/*กอบ*/
+.box {
+    min-width: 100%;
+    table-layout: auto;
+    width: 100%;
+
+}
+
+/*กอบบน*/
+.head {
+    background-color: #FFC805;
+    padding-left: 64px;
+    padding-right: 64px;
+    padding-top: 8px;
+    padding-bottom: 10px;
+    border: 1px solid #000000;
+
+
+}
+
+/*อักษรกอบบน*/
+.texthead {
+    color: #1a1a1a;
+}
+
+/*สีพื้นหลังหน่วยงาน*/
+.agency {
+    background-color: #ffffff;
+
+
+
+}
+
+/*ตัวอักษรหน่วยงาน*/
+.textagency {
+    text-align: center;
+    position: relative;
+
+}
+
+/*รายการต่างๆ*/
+.items {
+    padding-left: 64px;
+    padding-right: 64px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-basis: 200;
+
+
+
+}
+
+/*เพิ่มตัวเลข*/
+.input {
+    text-align: center;
+    border-width: 1px;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    border-radius: 6px;
+    width: 107px;
+    height: 35px;
+    background: #D9D9D9;
+    border-radius: 12px;
+}

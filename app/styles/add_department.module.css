@@ -1,0 +1,127 @@
+.BodyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-family: 'Sarabun', sans-serif;
+}
+
+.BodyContainer>h1 {
+    font-size: 35px;
+    margin: 15px;
+    font-weight: 100;
+}
+
+.containerForm {
+    display: flexbox;
+    width: 40%;
+    padding: 10px;
+    background-color: #fdb953e9;
+    font-size: 20px;
+    border-radius: 13px;
+
+}
+
+.roundStyle,
+.numberStyle,
+.nameFaculty {
+    margin: 10px 10px 10px 30px;
+
+}
+
+/* .nameFaculty > input,
+.numberStyle > input{
+    width: 60%;
+    height: 25px;
+}
+
+.roundStyle > select {
+    width: 60%;
+    height: 30px;
+
+    font-family: 'sarabun', sans-serif;
+} */
+
+.roundStyle,
+.numberStyle,
+.nameFaculty {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 90%;
+    /* ให้ div ใช้พื้นที่เต็มของฟอร์ม */
+}
+
+.nameFaculty>input,
+.numberStyle>input,
+.roundStyle>select {
+    flex: 1;
+    height: 30px;
+    font-family: 'Sarabun', sans-serif;
+    margin-left: 10px;
+    /* เพิ่มช่องว่างระหว่าง label กับ input */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.roundStyle>select {
+    height: 36px;
+}
+
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.buttonBack {
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 18px;
+}
+
+.buttonSave {
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 10px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 18px;
+}
+
+@media (max-width: 600px) {
+    .containerForm {
+        display: flexbox;
+        width: 60%;
+        padding: 10px;
+        background-color: #fdb953e9;
+        font-size: 20px;
+        border-radius: 13px;
+
+    }
+
+    .roundStyle,
+    .numberStyle,
+    .nameFaculty {
+        display: block;
+        align-items: center;
+        margin: 10px 10px 10px 5px;
+        width: 90%;
+
+        /* ให้ div ใช้พื้นที่เต็มของฟอร์ม */
+    }
+
+}
