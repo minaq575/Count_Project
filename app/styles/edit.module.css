@@ -80,7 +80,7 @@
 }
 
 .inputField {
-    width: calc(30% - 20px);
+    width: calc(23%);
     padding: 8px;
     /* Reduced padding */
     margin: 10px auto;
@@ -198,8 +198,9 @@
 
 
 @media (min-width: 601px) and (max-width: 1024px) {
-    .Table1 {
-        display: block;
+.Table1 {
+
+        display: flex;
         flex-direction: column;
         width: 100%;
         color: rgb(0, 0, 0);
@@ -210,23 +211,23 @@
 
     .inputField {
         margin: 10px auto;
-        width: calc(70% - 20px);
+        width: calc(90% - 20px);
         border: 1px solid #ffffff;
         border: none;
         border: 2px solid rgba(93, 93, 93, 0.808);
         border-radius: 4px;
+        margin-left: 5px;
         margin-left: 22px;
     }
 
 
     .formselect {
-        width: 70%;
+        width: 90%;
         padding: 8px 10px;
         margin: 8px 0;
         box-sizing: border-box;
         border: 2px solid rgba(93, 93, 93, 0.808);
-        border-radius: 4px;
-        margin-left: 55px;
+        margin-right: 35px;
     }
 }
 
