@@ -1,4 +1,15 @@
-
+.container {
+    background-color: #fdb953e9;
+    padding: 10px;
+    border-radius: 13px;
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
 
 .ContainerAll {
     display: flex;
@@ -7,13 +18,13 @@
     justify-content: center;
     width: 100%;
     height: auto;
-    text-align: center;
 }
 
 .ContainerHeadRound {
     font-family: 'Sarabun', sans-serif;
     font-size: 35px;
-    margin: 10px;
+    margin: 20px;
+    font-weight: 700;
 }
 
 .Content1 {
@@ -23,47 +34,53 @@
     justify-content: center;
     font-family: 'Sarabun', sans-serif;
     font-size: 20px;
-    margin: 10px;
+    font-weight: 500;
+    margin: 5px;
+    width: 95%;
 }
 
-.Content1 > input {
-    width: 300px;
+.Content1>input {
+    width: 30%;
     height: 25px;
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
     margin: 5px;
     font-family: 'Sarabun', sans-serif;
     font-size: 15px;
 }
 
-.ContainerAll > button {
-    width: auto;
-    margin: 5px;
-    padding: 5px 10px;
-    background-color: #cd8a3e;
+.ContainerAll>button {
+    padding: 10px 20px;
+    background-color: green;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin: 10px;
+    font-family: 'Sarabun', sans-serif;
+    font-size: 18px;
 }
 
-
-@media (max-width: 600px) {
-    .Content1 > input {
-        width: 20%; 
-        height: 20px;
-        padding: 6px; 
-        font-size: 14px; 
-    }
-    
-    .ContainerAll > button {
-        width: 20%; 
-        padding: 8px; 
-        font-size: 14px; 
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
     }
 
     .Content1 {
-        font-size: 14px; 
+        font-size: 15px;
+        width: 100%;
+    }
+
+    .Content1>input {
+        width: 16%;
+        padding: 4px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 80%;
     }
 }

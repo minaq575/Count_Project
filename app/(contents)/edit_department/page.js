@@ -121,8 +121,8 @@ export default function EditAddDepartment() {
                     <div key={faculty.idfaculty} className={styles.Table1}>
                         
                         หน่วยงาน: <input className={styles.inputField} type="text" value={faculty.name} onChange={(e) => handleNameChange(index, e.target.value)} />&nbsp;
-                        จำนวนเข้ารับ: <input className={styles.inputField} type="text" value={faculty.total} onChange={(e) => handleTotalChange(index, e.target.value)} />&nbsp;
-                        รอบ: 
+                        <br/>จำนวนเข้ารับ: <input className={styles.inputField} type="text" value={faculty.total} onChange={(e) => handleTotalChange(index, e.target.value)} />&nbsp;
+                       <br/>รอบ: 
                         <select className={styles.formselect} value={faculty.rname} onChange={(e) => handleRoundChange(index, e.target.value)}>
                             {roundOptions.map((option, i) => (
                                 <option key={i} value={option}>{option}</option>

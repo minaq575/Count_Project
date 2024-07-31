@@ -12,7 +12,7 @@ export async function POST(request) {
 
         const connection = await pool.getConnection();
 
-        // Check if round with the given rname exists
+
         const selectRoundQuery = 'SELECT idround FROM round WHERE name = ? LIMIT 1';
         const [roundResult] = await connection.execute(selectRoundQuery, [rname]);
 
@@ -22,8 +22,7 @@ export async function POST(request) {
         }
 
         const idround = roundResult[0].idround;
-
-        // Insert faculty data with idround
+        
         const insertFacultyQuery = 'INSERT INTO faculty (name, total, idround) VALUES (?, ?, ?)';
         await connection.execute(insertFacultyQuery, [name, total, idround]);
 
