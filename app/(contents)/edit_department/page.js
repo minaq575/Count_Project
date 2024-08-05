@@ -5,6 +5,7 @@ import Handle_Click from "@/app/components/handle/handleclick";
 import React, { useState, useEffect } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import styles from "@/app/styles/edit.module.css"
+import { useRouter } from 'next/navigation'; 
 
 async function getFaculty() {
     const res = await fetch('http://localhost:3000/api/faculty', { method: "GET" });
@@ -17,6 +18,7 @@ async function getFaculty() {
 export default function EditAddDepartment() {
     const { data: session, status } = useSession();
     const [facultys, setFacultys] = useState([]);
+    const router = useRouter();
     const roundOptions = ["รอบเช้าช่วง 1", "รอบเช้าช่วง 2", "รอบบ่ายช่วง 1", "รอบบ่ายช่วง 2"]; 
 
     useEffect(() => {
@@ -56,7 +58,7 @@ export default function EditAddDepartment() {
         setFacultys(updatedFacultys);
     };
 
-    const handleSave = async () => {
+     const handleSave = async () => {
         try {
             for (let index = 0; index < facultys.length; index++) {
                 const updatedFaculty = facultys[index];
@@ -73,7 +75,7 @@ export default function EditAddDepartment() {
                     continue;
                 }
 
-                
+                // Ensure name and total are not empty or undefined
                 if (!updatedFaculty.name || !updatedFaculty.total) {
                     console.error(`Name and total are required for index ${index}`);
                     continue;
@@ -96,12 +98,13 @@ export default function EditAddDepartment() {
 
                 console.log(`Faculty with ID ${facultyId} updated successfully`);
             }
-            
-            const updatedData = await getFaculty();
+            // Fetch the updated facultys after saving
+            const updatedData = getData('faculty');
             setFacultys(updatedData.faculty || []);
         } catch (error) {
             console.error('Error updating faculty:', error.message);
         }
+        router.push("/faculty")
     };
 
     if (status === 'loading') {

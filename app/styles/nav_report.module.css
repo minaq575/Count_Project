@@ -15,6 +15,7 @@
   margin-top: 8px;
 } */
 
+
 @media screen and (max-width: 800px) {
 
   .header {
@@ -53,5 +54,7 @@
     max-width: 70%;
     margin-top: 8px;
   }
+
+  
 
 }
