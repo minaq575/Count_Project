@@ -23,10 +23,29 @@ async function updateCounter(current) {
   return res.json();
 }
 
+async function sendNotification(message) {
+  const postData = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ message })
+  };
+
+  const res = await fetch('http://localhost:3000/api/notify', postData);
+  if (!res.ok) {
+    throw new Error("Failed to send notification");
+  }
+  return res.json();
+}
+
 export default function Count() {
   const { data: session, status } = useSession();
   const [count, setCount] = useState(0);
   const [name, setName] = useState(0);
+  const [morningTotal, setMorningTotal] = useState(0);
+  const [afternoonTotal, setAfternoonTotal] = useState(0);
+  const [totalGraduates, setTotalGraduates] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -39,29 +58,47 @@ export default function Count() {
     }
   }, [session, status, router]);
 
-  async function fetchData(type = '') {
+  async function fetchData() {
     try {
-        const data = await getData('counter', type);
-        if (data.count && data.count.length > 0) {
-            setCount(data.count[0].current);
-        }
-        if (data.total && data.total.length > 0) {
-            setName(data.total[0].totalSum - data.count[0].current || 0);
-        }
+      const data = await getData('counter');
+      if (data.count && data.count.length > 0) {
+        setCount(data.count[0].current);
+      }
+      if (data.total) {
+        setTotalGraduates(data.total[0].totalSum || 0);
+        setMorningTotal(data.morning || 0);
+        setAfternoonTotal(data.afternoon || 0);
+        setName(data.total[0].totalSum - data.count[0].current || 0);
+      }
     } catch (error) {
-        console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error);
     }
-}
+  }
+
+  function formatNotificationMessage() {
+    return `
+      ภาพรวม [${Math.ceil(count / totalGraduates * 100)}%]
+      วันที่: ${new Date().toLocaleDateString()}
+      
+      รอบเช้า [${Math.ceil(morningTotal / totalGraduates * 100)}%]
+      ทั้งหมด ${morningTotal} ราย
+      ${morningTotal > 0 ? `    เข้ารับแล้ว ${count} ราย\n    คงเหลือ ${morningTotal - count} ราย` : ''}
+      
+      รอบบ่าย [${Math.ceil(afternoonTotal / afternoonTotal * 100)}%]
+      ทั้งหมด ${afternoonTotal} ราย
+      ${afternoonTotal > 0 ? `    เข้ารับแล้ว ${count} ราย\n    คงเหลือ ${afternoonTotal - count} ราย` : ''}
+    `;
+  }
 
   async function handleCountChange(event) {
-  const newValue = parseInt(event.target.value, 10) || 0;
-  setCount(newValue);
-  try {
+    const newValue = parseInt(event.target.value, 10) || 0;
+    setCount(newValue);
+    try {
       await updateCounter(newValue);
-  } catch (error) {
+    } catch (error) {
       console.error("Error updating counter:", error);
+    }
   }
-}
 
   async function handleNameChange(event) {
     const newValue = parseInt(event.target.value, 10) || 0;
@@ -75,14 +112,17 @@ export default function Count() {
   if (!session) {
     return null;
   }
+
   async function incrementCount() {
     const newCount = count + 1;
     setCount(newCount);
     setName(name - 1);
     try {
-        await updateCounter(newCount);
+      await updateCounter(newCount);
+      const message = formatNotificationMessage();
+      await sendNotification(message);
     } catch (error) {
-        console.error("Error updating counter:", error);
+      console.error("Error updating counter:", error);
     }
   }
 
@@ -91,62 +131,76 @@ export default function Count() {
     setCount(newCount);
     setName(name + 1);
     try {
-        await updateCounter(newCount);
+      await updateCounter(newCount);
+      const message = formatNotificationMessage();
+      await sendNotification(message);
     } catch (error) {
-        console.error("Error updating counter:", error);
+      console.error("Error updating counter:", error);
     }
   }
-  
-   return (
-        <>
-            <Navber />
-            <div className={styles.Container}>
-                <div className={styles.BodyContainer}>
-                    <label>นับบัณฑิตเข้ารับพระราชทานปริญญาบัตร</label>
-                    <div className={styles.containerSum}>
-                        <div className={styles.flex27}>
-                            <div className={styles.flexBoxs}>
-                                <div className={styles.innerBox}>
-                                    <h3>จำนวนบัณฑิตทั้งหมด</h3>
-                                    <div className={styles.numInnerBox}>
-                                        <label>4000</label>
-                                    </div>
-                                </div>
-                                <div className={styles.innerBox}>
-                                    <h3>จำนวนบัณฑิตรอบเช้า</h3>
-                                    <div className={styles.numInnerBox}>
-                                        <label>2500</label>
-                                    </div>
-                                </div>
-                                <div className={styles.innerBox}>
-                                    <h3>จำนวนบัณฑิตรอบบ่าย</h3>
-                                    <div className={styles.numInnerBox}>
-                                        <label>1500</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.flex73}>
-                            <div className={styles.innerBoxFlex73}>
-                                <h2>บัณฑิตที่รับแล้ว</h2>
-                                <input type="number" value={count} onChange={handleCountChange} />
-                            </div>
-                            <div className={styles.innerBoxFlex73}>
-                                <h2>บัณฑิตที่ยังไม่ได้รับ</h2>
-                                <input type="number" value={name} onChange={handleNameChange} />
-                            </div>
 
-                            <div className={styles.innerBoxFlex73}>
-                                <div className={styles.btnClick}>
-                                    <button className={`${styles.btnPlus} ${styles.btnClick}`} onClick={incrementCount}>เพิ่มจำนวน</button>
-                                    <button className={`${styles.btnDelete} ${styles.btnClick}`} onClick={decrementCount}>ลดจำนวน</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+  // useEffect(() => {
+  //   const intervalId = setInterval(async () => {
+  //     try {
+  //       const message = formatNotificationMessage();
+  //       await sendNotification(message);
+  //     } catch (error) {
+  //       console.error("Error sending notification:", error);
+  //     }
+  //   }, 15000); // 15 seconds
+
+  //   return () => clearInterval(intervalId);
+  // }, [count, morningTotal, afternoonTotal, totalGraduates]);
+
+  return (
+    <>
+      <Navber />
+      <div className={styles.Container}>
+        <div className={styles.BodyContainer}>
+          <label>นับบัณฑิตเข้ารับพระราชทานปริญญาบัตร</label>
+          <div className={styles.containerSum}>
+            <div className={styles.flex27}>
+              <div className={styles.flexBoxs}>
+                <div className={styles.innerBox}>
+                  <h3>จำนวนบัณฑิตทั้งหมด</h3>
+                  <div className={styles.numInnerBox}>
+                    <label>{totalGraduates}</label>
+                  </div>
                 </div>
+                <div className={styles.innerBox}>
+                  <h3>จำนวนบัณฑิตรอบเช้า</h3>
+                  <div className={styles.numInnerBox}>
+                    <label>{morningTotal}</label>
+                  </div>
+                </div>
+                <div className={styles.innerBox}>
+                  <h3>จำนวนบัณฑิตรอบบ่าย</h3>
+                  <div className={styles.numInnerBox}>
+                    <label>{afternoonTotal}</label>
+                  </div>
+                </div>
+              </div>
             </div>
-            <Footer />
-        </>
-    );
+            <div className={styles.flex73}>
+              <div className={styles.innerBoxFlex73}>
+                <h2>บัณฑิตที่รับแล้ว</h2>
+                <input type="number" value={count} onChange={handleCountChange} />
+              </div>
+              <div className={styles.innerBoxFlex73}>
+                <h2>บัณฑิตที่ยังไม่ได้รับ</h2>
+                <input type="number" value={name} onChange={handleNameChange} />
+              </div>
+              <div className={styles.innerBoxFlex73}>
+                <div className={styles.btnClick}>
+                  <button className={`${styles.btnPlus} ${styles.btnClick}`} onClick={incrementCount}>เพิ่มจำนวน</button>
+                  <button className={`${styles.btnDelete} ${styles.btnClick}`} onClick={decrementCount}>ลดจำนวน</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 }
