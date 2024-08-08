@@ -2,12 +2,42 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    const { message } = await request.json();
+    const { message, reportData } = await request.json();
     const token = process.env.LINE_NOTIFY_TOKEN;
 
-    if (!message) {
-      return NextResponse.json({ error: "Missing required field (message)" }, { status: 400 });
+    if (!message || !reportData) {
+      return NextResponse.json({ error: "Missing required fields (message or reportData)" }, { status: 400 });
     }
+
+    // Construct the notification message with report data
+    const facultyDetails = reportData.facultyData.map(f => 
+      `${f.name}:
+      รับแล้ว: ${f.received},
+      คงเหลือ: ${f.remaining},
+     [${f.percentage}] %
+     .............`
+    ).join('\n');
+
+    const notificationMessage = 
+      `${message}\n
+      ภาพรวม\n
+      รับแล้ว: ${reportData.current}\n
+      คงเหลือ: ${reportData.totalSum - reportData.current}\n
+      เปอร์เซ็นต์: ${reportData.overviewPercentage}%\n
+      ----------------------
+      รอบเช้า\n
+      รับแล้ว: ${reportData.morning}\n
+      คงเหลือ: ${reportData.remainingMorning}\n
+      เปอร์เซ็นต์: ${reportData.morningPercentage}%\n
+      ----------------------
+      รอบบ่าย\n
+      รับแล้ว: ${reportData.afternoon > 0 ? reportData.current - reportData.morning : 0}\n
+      คงเหลือ: ${reportData.remainingAfternoon}\n
+      เปอร์เซ็นต์: ${reportData.afternoonPercentage}%\n
+      ----------------------
+      คณะ\n
+      ${facultyDetails}`
+    ;
 
     const response = await fetch('https://notify-api.line.me/api/notify', {
       method: 'POST',
@@ -15,7 +45,7 @@ export async function POST(request) {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: new URLSearchParams({ message })
+      body: new URLSearchParams({ message: notificationMessage })
     });
 
     if (!response.ok) {
