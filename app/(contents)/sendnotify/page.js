@@ -1,19 +1,20 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import MetaRefresh from '@/app/components/meta_refresh';
 
 export default function SendNotification() {
-  const [message, setMessage] = useState('');
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
 
-  const handleSendNotification = async () => {
+  // Function to send notification
+  const sendNotification = async () => {
     try {
       const res = await fetch('/api/notify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message: 'Page refreshed' }),
       });
       const result = await res.json();
       if (res.ok) {
@@ -29,9 +30,27 @@ export default function SendNotification() {
     }
   };
 
+  useEffect(() => {
+    // Send notification on component mount
+    sendNotification();
+
+    // Set up an interval to refresh the page every 3 minutes
+    const interval = setInterval(() => {
+      sendNotification(); // Send notification before refresh
+      window.location.reload();
+    }, 180000); // 180,000 ms = 3 minutes
+
+    // Clean up interval on component unmount
+    return () => clearInterval(interval);
+  }, []); // Empty dependency array to run once on component mount
+
   return (
     <div>
-  
+      <MetaRefresh interval="180" /> {/* Optionally include MetaRefresh for extra compatibility */}
+      <h1>Send Notification</h1>
+      {/* Display success or error message if available */}
+      {response && <p>Notification sent successfully!</p>}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 }
