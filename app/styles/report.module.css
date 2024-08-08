@@ -1,19 +1,53 @@
 .headers {
-    width: 100%; /* ใช้ vw เพื่อให้ความกว้างเต็มหน้าจอ */
-    height: 100%; /* กำหนดความสูงที่ต้องการ */
+    width: 100%;
+    /* ใช้ vw เพื่อให้ความกว้างเต็มหน้าจอ */
+    height: 100%;
+    /* กำหนดความสูงที่ต้องการ */
     text-align: center;
     justify-content: center;
-    align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+    align-items: center;
+    /* จัดกึ่งกลางแนวตั้ง */
     background-color: white;
     display: flex;
     z-index: 1000;
-        /* ทำให้ header อยู่ด้านบน */
+    /* ทำให้ header อยู่ด้านบน */
 }
+
+.percentageGreen {
+    background-color: rgb(0, 186, 0);
+}
+
+.facultyTableContainer {
+    margin-top: 20px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.facultyTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.facultyTable th,
+.facultyTable td {
+    border: 1px solid #000000;
+    padding: 8px;
+    text-align: center;
+}
+
+.facultyTable th {
+    background-color: #DE7D24;
+    color: black;
+    height: 30px;
+    font-size: 20px;
+}
+
 
 .bg {
     height: 100%;
     width: 100%;
-        /* ความกว้างเต็มหน้าจอ */
+    /* ความกว้างเต็มหน้าจอ */
     /* background-image: url("/images/bg-fade.png"); */
     background-repeat: no-repeat;
     background-position: center;
@@ -26,15 +60,16 @@
     justify-content: center;
     align-items: center;
 
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .ContainRow0 {
     display: grid;
-    place-items: center;  
+    place-items: center;
     padding: 10px;
     margin: auto;
-    align-items: center; /* จัดให้อยู่กึ่งกลางในแนวดิ่ง */
+    align-items: center;
+    /* จัดให้อยู่กึ่งกลางในแนวดิ่ง */
 
     width: 900px;
     height: auto;
@@ -53,7 +88,7 @@
     margin: auto;
     background-color: #ffffff00;
     padding: 20px;
-    
+
 }
 
 .row_0>h {
@@ -82,9 +117,12 @@
     border: 1px solid #000000;
     font-family: 'Sarabun', sans-serif;
 
-    display: flex; /* ใช้ Flexbox ในการจัดตำแหน่ง */
-    justify-content: center;/* จัดกึ่งกลางในแนวนอน */
-    align-items: center;/* จัดกึ่งกลางในแนวดิ่ง */
+    display: flex;
+    /* ใช้ Flexbox ในการจัดตำแหน่ง */
+    justify-content: center;
+    /* จัดกึ่งกลางในแนวนอน */
+    align-items: center;
+    /* จัดกึ่งกลางในแนวดิ่ง */
 }
 
 .row_0>div>per1 {
@@ -107,7 +145,7 @@
 }
 
 .row_1>h {
-    background-color:#DE7D24;
+    background-color: #DE7D24;
     text-align: center;
     padding: 10px 0;
     font-size: 30px;
@@ -122,7 +160,7 @@
     /* จัดกึ่งกลางในแนวดิ่ง */
 }
 
-.row_1> h_remain {
+.row_1>h_remain {
     background-color: rgb(157, 156, 156);
     text-align: center;
     padding: 10px 0;
@@ -145,7 +183,7 @@
     font-size: 35px;
     border: 1px solid #000000;
     font-family: 'Sarabun', sans-serif;
-    
+
 
     display: flex;
     /* ใช้ Flexbox ในการจัดตำแหน่ง */
@@ -187,68 +225,34 @@
 }
 
 
-.FacultyName {
-    display: grid;
-    grid-template-columns: 250px;
-    grid-template-rows: 60px 70px;
-    gap: 0px;
-    background-color: #ffffff00;
-    padding: 5px;
-    margin-top: 24.5px;
-}
-
-.FacultyName>h {
-    background-color: #DE7D24;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 30px;
-    border: 1px solid #000000;
-    font-family: 'Sarabun', sans-serif;
-
-    display: flex;
-    /* ใช้ Flexbox ในการจัดตำแหน่ง */
-    justify-content: center;
-    /* จัดกึ่งกลางในแนวนอน */
-    align-items: center;
-    /* จัดกึ่งกลางในแนวดิ่ง */
-}
-
-.FacultyName>div {
-    background-color: white;
-    text-align: center;
-    padding: 15px 0;
-    font-size: 20px;
-    border: 1px solid #000000;
-    font-family: 'Sarabun', sans-serif;
-
-    display: flex;
-    /* ใช้ Flexbox ในการจัดตำแหน่ง */
-    justify-content: center;
-    /* จัดกึ่งกลางในแนวนอน */
-    align-items: center;
-    /* จัดกึ่งกลางในแนวดิ่ง */
-}
 
 
-.TimeGnGfnTest > div {
+
+.TimeGnGfnTest>div {
     justify-content: center;
     text-align: center;
     font-family: 'Sarabun', sans-serif;
 }
 
 .ContainTimeGnGfn {
-    display: flex; /* ใช้ flexbox สำหรับจัดวางในแนวนอน */
-    width: 100%; /* กำหนดความกว้างให้เต็มบรรทัด */
-    margin-bottom: 5px; /* เพิ่มระยะห่างด้านล่างเพื่อเว้นบรรทัด */
+    display: flex;
+    /* ใช้ flexbox สำหรับจัดวางในแนวนอน */
+    width: 100%;
+    /* กำหนดความกว้างให้เต็มบรรทัด */
+    margin-bottom: 5px;
+    /* เพิ่มระยะห่างด้านล่างเพื่อเว้นบรรทัด */
     gap: 190px;
     transform: translate(-145px, 0px);
     justify-content: center;
 }
 
 .ContainOverview {
-    display: flex; /* ใช้ flexbox สำหรับจัดวางในแนวนอน */
-    width: 100%; /* กำหนดความกว้างให้เต็มบรรทัด */
-    margin-bottom: 5px; /* เพิ่มระยะห่างด้านล่างเพื่อเว้นบรรทัด */
+    display: flex;
+    /* ใช้ flexbox สำหรับจัดวางในแนวนอน */
+    width: 100%;
+    /* กำหนดความกว้างให้เต็มบรรทัด */
+    margin-bottom: 5px;
+    /* เพิ่มระยะห่างด้านล่างเพื่อเว้นบรรทัด */
     justify-content: center;
 }
 
@@ -276,7 +280,7 @@
 
 .ContainAll {
     display: grid;
-    place-items: center;  
+    place-items: center;
     padding: 20px;
 }
 
@@ -296,15 +300,12 @@
     text-align: center;
 }
 
-.containFacultyName {
-    display: flex;
-    place-items: center;
-    height: 200px;
-}
+
 
 .Container {
     display: flex;
-    justify-content: center; /* จัดให้อยู่กึ่งกลางแนวนอน */
+    justify-content: center;
+    /* จัดให้อยู่กึ่งกลางแนวนอน */
     align-items: center;
     flex-direction: row;
     height: 260px;
@@ -321,18 +322,21 @@
 
 @media only screen and (max-width: 768px) {
     .Container {
-        width: 100%;/* ทำให้ container ทุกตัวเต็มความกว้างของ viewport */
+        width: 100%;
+        /* ทำให้ container ทุกตัวเต็มความกว้างของ viewport */
         height: 100%;
     }
 
     .bg {
-        width: 100%;/* ทำให้ container ทุกตัวเต็มความกว้างของ viewport */
+        width: 100%;
+        /* ทำให้ container ทุกตัวเต็มความกว้างของ viewport */
         height: 100%;
         display: flex;
     }
 
     .ContainRow0 {
-        width: 100%;/* ทำให้ container ทุกตัวเต็มความกว้างของ viewport */
+        width: 100%;
+        /* ทำให้ container ทุกตัวเต็มความกว้างของ viewport */
         height: 100%;
     }
 
@@ -349,8 +353,9 @@
 
 @media only screen and (max-width: 670px) {
     .row_0 {
-            width: 75%; /*ปรับเพื่อไอโฟน se โดยเฉพาะ*/
-            grid-template-columns: auto auto;
-            margin: 15px 80px;
+        width: 75%;
+        /*ปรับเพื่อไอโฟน se โดยเฉพาะ*/
+        grid-template-columns: auto auto;
+        margin: 15px 80px;
     }
 }
