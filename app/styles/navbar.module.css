@@ -1,109 +1,155 @@
 .container {
-    max-width: auto;
-    margin: 0 ;
-    font-family: 'Sarabun';
-  }
-  
-  .header {
-    background: #fff;
-    height: 120px;
-  }
-  
-  .headerContainer {
-    display: flex;
-    justify-content: space-between;
-    height: 100px;
-    align-items: center;
-  }
-  
-  .logoContainer .logo {
-    margin-top: 10px;
-  }
-  
-  .menu {
-    display: flex;
-    list-style-type: none;
-  }
-  
-  .menuLink {
-    padding-right: 2.5rem;
-    text-decoration: none;
-    color: #000;
-    font-size: large ;
-    font-weight:bold;
-  }
-  
+  max-width: auto;
+  margin: 0;
+}
+
+.header {
+  background: #fff;
+  height: 120px;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  height: 100px;
+  align-items: center;
+}
+
+.logoContainer .logo {
+  margin-top: 20px;
+}
+
+.menu {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  /* Ensure alignment */
+}
+
+.menuLink {
+  padding-right: 2.5rem;
+  text-decoration: none;
+  color: #000;
+  font-size: large;
+  font-weight: bold;
+  font-family: 'Sarabun', sans-serif;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+.signOutContainer {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  font-family: 'Sarabun', sans-serif;
+  font-size: large;
+  font-weight: bold;
+  color: green;
+  margin-right: 1rem;
+}
+
+.button {
+  font-weight: bold;
+  background-color: darkred;
+  /* Dark red background */
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 3px;
+}
+
+.button:hover {
+  background-color: #b22222;
+  /* Darker shade of red on hover */
+}
+
+@media screen and (max-width: 800px) {
   .mobileMenu {
+    display: block;
+    color: #000;
+    font-size: 2rem;
+  }
+
+  .headerContainer {
+    width: 90%;
+  }
+
+  .logoContainer {
+    width: 90%;
+  }
+
+  .logoContainer .logo {
+    height: 30%;
+    width: 80%;
+  }
+
+  .menu {
+    width: 100%;
+    height: auto;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    top: 71px;
+    left: -100%;
+    opacity: 0;
+    transition: 0.5s ease;
+  }
+
+  .menu.active {
+    background: #f49b49;
+    left: 0;
+    opacity: 0.9;
+    z-index: 1;
+    padding-left: 0;
+    align-content: center;
+    transition: 0.5s ease;
+  }
+
+  .menuActive li a {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .menu li {
+    padding-right: 0;
+  }
+
+  .menuLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vw;
+    padding: 10px 0;
+    color: 262020;
+    font-weight: bold;
+  }
+
+  .username {
     display: none;
-  }
-  .username{
-    font-family: 'Noto Sans Thai', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
+    /* Hide username in responsive view */
   }
 
-  .button{
+  .button {
+    background-color: transparent;
+    /* Remove background color */
+    color: #262020;
+    /* White text color */
     font-weight: bold;
+    font-size: large;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
   }
 
-  @media screen and (max-width: 800px) {
-    .mobileMenu {
-      display: block;
-      color: #000;
-      font-size: 2rem;
-    }
-    .header {
-      padding: 0 2rem;
-    }
-    .logoContainer .logo {
-      margin-top: 10px;
-      height: auto; 
-      max-width: 85%;
-    }
-    .menu {
-      width: 100%;
-      height: auto;
-      display: flex;
-      position: absolute;
-      flex-direction: column;
-      top: 71px;
-      left: -100%;
-      opacity: 0;
-      transition: 0.5s ease;
-    }
-    .menu.active {
-      background: #111;
-      left: 0;
-      opacity: 0.95;
-      z-index: 1;
-      padding-left: 0;
-      align-content: center;
-      transition: 0.5s ease;
-    }
-    .menuActive li a {
-      text-decoration: none;
-      color: #fff;
-    }
-    .menu li {
-      padding-right: 0;
-      
-    }
-    .menuLink {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 10vw;
-      padding: 10px 0;
-      color: #fff;
-      font-weight:bold;
-    }
-    .username {
-      display: none;
-      
-    }
-    .button{
-      font-weight: bold;
-    }
+  .button:hover {
+    background-color: #DE7D24;
+    /* Orange background color on hover */
   }
-  
+
+}

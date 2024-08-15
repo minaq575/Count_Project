@@ -1,7 +1,6 @@
 "use client";
+
 import { useState, useEffect } from "react";
-import { useSession, signIn } from "next-auth/react";
-import { useRouter } from 'next/navigation'; 
 import Navber from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Handle_Click from "@/app/components/handle/handleclick";
@@ -10,20 +9,12 @@ import deleteData from "@/app/components/CLUD/delete";
 import styles from '@/app/styles/faculty.module.css';
 
 export default function Faculty() {
-    const { data: session, status } = useSession();
     const [facultys, setFacultys] = useState([]);
     const [loading, setLoading] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
-        if (status === 'loading') return;
-
-        if (!session) {
-            router.push('/login');
-        } else {
-            fetchData();
-        }
-    }, [session, status, router]);
+        fetchData();
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -31,7 +22,7 @@ export default function Faculty() {
             const param = "faculty";
             const data = await getData(param);
             if (data && data.faculty) {
-                setFacultys(data.faculty);
+                setFacultys(data.faculty); // ต้องมี rname ในข้อมูลที่ได้รับมา
             }
         } catch (error) {
             console.error("Error fetching faculty data:", error);
@@ -52,23 +43,13 @@ export default function Faculty() {
         }
     };
 
-    if (status === 'loading') {
-        return <div>Loading...</div>;
-    }
-
-    if (!session) {
-        return null;
-    }
-
     return (
         <div>
             <Navber />
             <div className={styles.container}>
-                <div className={styles.ContainerTopic}>รายชื่อหน่วยงาน</div>
-                    
-                {loading ? (<div>Loading...</div>) : (
-                    
-                    <div className={styles.containerTable}>
+                <div className={styles.ContainerTopic} >รายชื่อหน่วยงาน</div>
+                {loading ? ( <div>Loading...</div>) : 
+                   (<div className={styles.containerTable}>
                         <table className={styles.table}>
                             <thead>
                                 <tr className={styles.tr}>
@@ -93,10 +74,9 @@ export default function Faculty() {
                         </table>
                     </div>
                 )}
-
                 <div className={styles.stylesButton}>
                     <Handle_Click path="/add_department" buttonText="เพิ่ม" /> &nbsp;
-                    <Handle_Click path="/edit_department" buttonText="แก้ไข" />
+                    <Handle_Click path="/edit_add_department" buttonText="แก้ไข" />
                 </div>
             </div>
             <Footer />

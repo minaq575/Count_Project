@@ -6,14 +6,13 @@
     width: 100%;
     height: auto;
     text-align: center;
-
 }
 
 .ContainerTopic {
     font-family: 'Sarabun', sans-serif;
     font-size: 35px;
     margin: 20px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .stylesButton {
@@ -31,6 +30,9 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+
+    font-family: 'Sarabun', sans-serif;
+    font-size: 18px;
 }
 
 .containerTable {
@@ -60,6 +62,8 @@
 .td {
     padding: 8px;
     border-radius: 2px;
+
+
 }
 
 .th {
@@ -72,7 +76,6 @@
 
 tbody .tr:nth-of-type(odd) {
     background-color: #fff;
-    /* สีขาว */
 }
 
 /* .tr:hover {
@@ -81,7 +84,6 @@ tbody .tr:nth-of-type(odd) {
 
 .ButtonDelete {
     width: auto;
-
     padding: 5px 10px;
     background-color: red;
     color: white;
@@ -90,8 +92,9 @@ tbody .tr:nth-of-type(odd) {
     cursor: pointer;
 }
 
-@font-face {
-    font-family: 'Sarabun';
-    src: url('/public/Sarabun-Regular.ttf') format('truetype');
-    /* ตั้งชื่อฟอนต์ตามที่คุณต้องการและเปลี่ยนที่อยู่ของไฟล์ฟอนต์ให้ตรงกับโครงสร้างโปรเจคของคุณ */
+@media (max-width: 600px) {
+    .containerTable {
+        width: 90%;
+
+    }
 }

@@ -6,6 +6,7 @@ import getData from '@/app/components/CLUD/get';
 export default function SendNotification() {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
+  const [notificationSent, setNotificationSent] = useState(false); // ตัวแปรสถานะใหม่
 
   const fetchDataAndSendNotification = async () => {
     try {
@@ -50,35 +51,38 @@ export default function SendNotification() {
       const afternoonReceived = current >= morning ? Math.max(current - morning, 0) : 0;
       const afternoonPercentage = afternoon > 0 ? (afternoonReceived >= afternoon ? 100 : Math.round((afternoonReceived / afternoon) * 100)) : 0;
 
-      const res = await fetch('/api/notify', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: 'Page refreshed',
-          reportData: {
-            current,
-            totalSum,
-            overviewPercentage,
-            morning,
-            remainingMorning,
-            morningPercentage,
-            afternoon,
-            remainingAfternoon,
-            afternoonPercentage,
-            facultyData,
-          }
-        }),
-      });
-
-      const result = await res.json();
-      if (res.ok) {
-        setResponse(result.message);
-        setError(null);
-      } else {
-        setResponse(null);
-        setError(result.error);
+      // ตรวจสอบว่ามีการส่ง Notification แล้วหรือยัง
+      if (!notificationSent) {
+        const res = await fetch('/api/notify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: 'Page refreshed',
+            reportData: {
+              current,
+              totalSum,
+              overviewPercentage,
+              morning,
+              remainingMorning,
+              morningPercentage,
+              afternoon,
+              remainingAfternoon,
+              afternoonPercentage,
+              facultyData,
+            }
+          }),
+        });
+        const result = await res.json();
+        if (res.ok) {
+          setResponse(result.message);
+          setError(null);
+          setNotificationSent(true); // ตั้งค่าให้ Notification ถูกส่งแล้ว
+        } else {
+          setResponse(null);
+          setError(result.error);
+        }
       }
     } catch (err) {
       setResponse(null);
@@ -88,6 +92,12 @@ export default function SendNotification() {
 
   useEffect(() => {
     fetchDataAndSendNotification();
+    const interval = setInterval(() => {
+      setNotificationSent(false); // Reset ค่าสถานะเมื่อครบเวลา 3 นาที
+      fetchDataAndSendNotification();
+    }, 180000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
