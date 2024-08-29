@@ -1,4 +1,4 @@
-//libs/mysql.tsx
+// libs/mysql.tsx
 import mysql from 'mysql2/promise'
 
 const pool = mysql.createPool({
@@ -13,7 +13,14 @@ const pool = mysql.createPool({
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0,
+    port: 4000,                         // TiDB Cloud port, usually 4000
+    ssl: {
+        ca: process.env.TIDB_SSL_CA,    // SSL certificate for secure connection
+    }
 
 })
 export default pool 
+
+
+
 
