@@ -16,7 +16,7 @@ async function updateCounter(current) {
     body: JSON.stringify({ current })
   };
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/counter`, postData);
+  const res = await fetch('https://count-project-eta.vercel.app/api/counter', postData);
   if (!res.ok) {
     throw new Error("Failed to update counter");
   }
