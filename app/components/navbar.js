@@ -33,6 +33,7 @@ function Nav() {
             <Link className={styles.menuLink} onClick={closeMobileMenu} href="/faculty">คณะ</Link>
             <Link className={styles.menuLink} onClick={closeMobileMenu} href="/round">รอบ</Link>
             <Link className={styles.menuLink} onClick={closeMobileMenu} href="/report">ภาพรวม</Link>
+             <Link className={styles.menuLink} onClick={closeMobileMenu} href="/sendnotify"target="_blank">sendNotify</Link>
             <div className={styles.signOutContainer}>
               {session && <span className={styles.username}>{session.user.name} </span>}
               <button className={styles.button} onClick={handleSignOut}>Sign out</button>
