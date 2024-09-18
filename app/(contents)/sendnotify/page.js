@@ -53,7 +53,7 @@ export default function SendNotification() {
 
       // ตรวจสอบว่ามีการส่ง Notification แล้วหรือยัง
       if (!notificationSent) {
-        const res = await fetch('/api/notify', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notify`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

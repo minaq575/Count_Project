@@ -6,8 +6,19 @@ export async function GET(request) {
     const type = searchParams.get('type');
 
     try {
+        // Set CORS headers
+        const response = NextResponse.next();
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
+        response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+        response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+        // Handle OPTIONS request
+        if (request.method === 'OPTIONS') {
+            return new Response(null, { status: 204 }); // No content for preflight requests
+        }
+
         const connection = await pool.getConnection();
-        
+
         let totalQuery = "";
         if (type === 'morning') {
             totalQuery = "SELECT 'morning', sum(total) as totalSum FROM counter.round WHERE idround IN (1, 2)";
@@ -17,7 +28,7 @@ export async function GET(request) {
             totalQuery = "SELECT 'all', sum(total) as totalSum FROM counter.round";
         }
         const [totalRows] = await connection.execute(totalQuery);
-        
+
         const countQuery = 'SELECT current FROM counter';
         const [countRows] = await connection.execute(countQuery);
 
@@ -29,20 +40,33 @@ export async function GET(request) {
 
         connection.release();
 
-        return NextResponse.json({
+        response.json({
             count: countRows,
             total: totalRows,
             morning: morningRows[0].totalSum,
             afternoon: afternoonRows[0].totalSum
         });
 
+        return response;
+
     } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
 
 export async function PUT(request) {
     try {
+        // Set CORS headers
+        const response = NextResponse.next();
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
+        response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+        response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+        // Handle OPTIONS request
+        if (request.method === 'OPTIONS') {
+            return new Response(null, { status: 204 }); // No content for preflight requests
+        }
+
         const body = await request.json();
         const { current } = body;
 
@@ -59,7 +83,8 @@ export async function PUT(request) {
             return NextResponse.json({ error: `Counter not found` }, { status: 404 });
         }
 
-        return NextResponse.json({ message: `Counter updated successfully` });
+        response.json({ message: `Counter updated successfully` });
+        return response;
     } catch (error) {
         console.error("Error updating counter:", error);
         return NextResponse.json({ error: "Failed to update counter" }, { status: 500 });
