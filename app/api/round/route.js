@@ -12,7 +12,7 @@ export async function GET(request) {
         const [rows] = await connection.execute(query);
         connection.release();
         // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', '*');
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
         response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
         return NextResponse.json({ round: rows });
@@ -41,7 +41,7 @@ export async function PUT(request) {
             return NextResponse.json({ error: `Round with ID ${id} not found` }, { status: 404 });
         }
         // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', '*');
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
         response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
         return NextResponse.json({ message: `Round with ID ${id} updated successfully` });

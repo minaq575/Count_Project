@@ -12,7 +12,7 @@ export async function GET(request) {
         const [rows] = await connection.execute(query);
         connection.release();
         // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', '*');
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
         response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
         return NextResponse.json({ faculty: rows });
@@ -37,7 +37,7 @@ export async function DELETE(request) {
             return NextResponse.json({ error: "No faculty member found with the given ID" }, { status: 404 });
         }
         // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', '*');
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
         response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
         return NextResponse.json({ message: "Faculty member deleted successfully" });
@@ -77,7 +77,7 @@ export async function PUT(request) {
             return NextResponse.json({ error: "No faculty member found with the given ID" }, { status: 404 });
         }
         // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', '*');
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
         response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
 

@@ -43,7 +43,7 @@ export async function POST(request) {
             throw new Error(`Failed to send notification: ${errorData.message}`);
         }
         // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', '*');
+        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
         response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
         return NextResponse.json({ message: 'Notification sent successfully' });
