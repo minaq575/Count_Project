@@ -16,7 +16,7 @@ async function updateCounter(current) {
     body: JSON.stringify({ current })
   };
 
-  const res = await fetch('http://localhost:3000/api/counter', postData);
+  const res = await fetch('/api/counter', postData);
   if (!res.ok) {
     throw new Error("Failed to update counter");
   }

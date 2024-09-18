@@ -69,7 +69,7 @@ export default function EditAddDepartment() {
 
                 const body = JSON.stringify({ id: facultyId, name: updatedFaculty.name, total: updatedFaculty.total, rname: updatedFaculty.rname });
 
-                const response = await fetch('http://localhost:3000/api/faculty', {
+                const response = await fetch('/api/faculty', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
