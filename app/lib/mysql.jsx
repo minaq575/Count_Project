@@ -16,7 +16,6 @@ const pool = mysql.createPool({
     port: 4000,                         // TiDB Cloud port, usually 4000
     ssl: {
         ca: process.env.TIDB_SSL_CA,    // SSL certificate for secure connection
-        ca: fs.readFileSync('./certs/tidb_ssl_ca.pem'),
         rejectUnauthorized: true
     }
 
