@@ -29,19 +29,12 @@ export async function GET(request) {
 
         connection.release();
 
-        const response = NextResponse.json({
+        return NextResponse.json({
             count: countRows,
             total: totalRows,
             morning: morningRows[0].totalSum,
             afternoon: afternoonRows[0].totalSum
         });
-
-        // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
-        response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-
-        return response;
 
     } catch (error) {
         return NextResponse.json({ error }, { status: 500 });
@@ -66,14 +59,7 @@ export async function PUT(request) {
             return NextResponse.json({ error: `Counter not found` }, { status: 404 });
         }
 
-        const response = NextResponse.json({ message: `Counter updated successfully` });
-
-        // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
-        response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-
-        return response;
+        return NextResponse.json({ message: `Counter updated successfully` });
     } catch (error) {
         console.error("Error updating counter:", error);
         return NextResponse.json({ error: "Failed to update counter" }, { status: 500 });

@@ -27,10 +27,6 @@ export async function POST(request) {
         await connection.execute(insertFacultyQuery, [name, total, idround]);
 
         connection.release();
-        // Add CORS headers
-        response.headers.set('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
-        response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
 
         return NextResponse.json({ message: 'Faculty data inserted successfully' });
 
