@@ -1,82 +1,91 @@
 import { NextResponse } from "next/server";
 import pool from "@/app/lib/mysql";
-// pages/api/counter.js
-export default function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+import Cors from 'cors';
 
-  if (req.method === 'OPTIONS') {
-    // Handle preflight request
-    res.status(200).end();
-    return;
-  }
+// Initialize the CORS middleware
+const cors = Cors({
+  methods: ['GET', 'POST', 'PUT'], // ระบุ HTTP methods ที่อนุญาต
+  origin: 'https://count-project-eta.vercel.app', // ระบุ origin ที่อนุญาต
+});
 
-  // Handle your GET or POST request
-  res.json({ count: 0 });
+// Helper method to handle CORS
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+      return resolve(result);
+    });
+  });
 }
 
 export async function GET(request) {
-    const { searchParams } = new URL(request.url);
-    const type = searchParams.get('type');
+  // Run CORS
+  await runMiddleware(request, NextResponse, cors);
 
-    try {
-        const connection = await pool.getConnection();
-        
-        let totalQuery = "";
-        if (type === 'morning') {
-            totalQuery = "SELECT 'morning', sum(total) as totalSum FROM counter.round WHERE idround IN (1, 2)";
-        } else if (type === 'afternoon') {
-            totalQuery = "SELECT 'after', sum(total) as totalSum FROM counter.round WHERE idround IN (3, 4)";
-        } else {
-            totalQuery = "SELECT 'all', sum(total) as totalSum FROM counter.round";
-        }
-        const [totalRows] = await connection.execute(totalQuery);
-        
-        const countQuery = 'SELECT current FROM counter';
-        const [countRows] = await connection.execute(countQuery);
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get('type');
 
-        // Fetch morning and afternoon rounds separately
-        const morningQuery = "SELECT sum(total) as totalSum FROM counter.round WHERE idround IN (1, 2)";
-        const afternoonQuery = "SELECT sum(total) as totalSum FROM counter.round WHERE idround IN (3, 4)";
-        const [morningRows] = await connection.execute(morningQuery);
-        const [afternoonRows] = await connection.execute(afternoonQuery);
-
-        connection.release();
-
-        return NextResponse.json({
-            count: countRows,
-            total: totalRows,
-            morning: morningRows[0].totalSum,
-            afternoon: afternoonRows[0].totalSum
-        });
-
-    } catch (error) {
-        return NextResponse.json({ error }, { status: 500 });
+  try {
+    const connection = await pool.getConnection();
+    
+    let totalQuery = "";
+    if (type === 'morning') {
+        totalQuery = "SELECT 'morning', sum(total) as totalSum FROM counter.round WHERE idround IN (1, 2)";
+    } else if (type === 'afternoon') {
+        totalQuery = "SELECT 'after', sum(total) as totalSum FROM counter.round WHERE idround IN (3, 4)";
+    } else {
+        totalQuery = "SELECT 'all', sum(total) as totalSum FROM counter.round";
     }
+    const [totalRows] = await connection.execute(totalQuery);
+    
+    const countQuery = 'SELECT current FROM counter';
+    const [countRows] = await connection.execute(countQuery);
+
+    // Fetch morning and afternoon rounds separately
+    const morningQuery = "SELECT sum(total) as totalSum FROM counter.round WHERE idround IN (1, 2)";
+    const afternoonQuery = "SELECT sum(total) as totalSum FROM counter.round WHERE idround IN (3, 4)";
+    const [morningRows] = await connection.execute(morningQuery);
+    const [afternoonRows] = await connection.execute(afternoonQuery);
+
+    connection.release();
+
+    return NextResponse.json({
+        count: countRows,
+        total: totalRows,
+        morning: morningRows[0].totalSum,
+        afternoon: afternoonRows[0].totalSum
+    });
+
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
 }
 
 export async function PUT(request) {
-    try {
-        const body = await request.json();
-        const { current } = body;
+  await runMiddleware(request, NextResponse, cors); // Add CORS to PUT as well
+  
+  try {
+    const body = await request.json();
+    const { current } = body;
 
-        if (current === undefined) {
-            return NextResponse.json({ error: "Missing required field (current)" }, { status: 400 });
-        }
-
-        const connection = await pool.getConnection();
-        const query = 'UPDATE counter SET current = ? WHERE idcounter = 1'; // Assuming you are updating the record with idcount = 1
-        const [result] = await connection.execute(query, [current]);
-        connection.release();
-
-        if (result.affectedRows === 0) {
-            return NextResponse.json({ error: `Counter not found` }, { status: 404 });
-        }
-
-        return NextResponse.json({ message: `Counter updated successfully` });
-    } catch (error) {
-        console.error("Error updating counter:", error);
-        return NextResponse.json({ error: "Failed to update counter" }, { status: 500 });
+    if (current === undefined) {
+        return NextResponse.json({ error: "Missing required field (current)" }, { status: 400 });
     }
+
+    const connection = await pool.getConnection();
+    const query = 'UPDATE counter SET current = ? WHERE idcounter = 1'; // Assuming you are updating the record with idcount = 1
+    const [result] = await connection.execute(query, [current]);
+    connection.release();
+
+    if (result.affectedRows === 0) {
+        return NextResponse.json({ error: `Counter not found` }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: `Counter updated successfully` });
+  } catch (error) {
+    console.error("Error updating counter:", error);
+    return NextResponse.json({ error: "Failed to update counter" }, { status: 500 });
+  }
 }
