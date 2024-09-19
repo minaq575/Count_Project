@@ -16,7 +16,7 @@ async function updateCounter(current) {
     body: JSON.stringify({ current })
   };
 
-  const res = await fetch('/api/counter', postData);
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/counter`, postData);
   if (!res.ok) {
     throw new Error("Failed to update counter");
   }
