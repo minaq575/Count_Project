@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import pool from "@/app/lib/mysql";
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': '*', // หรือระบุ origin ที่อนุญาตเช่น 'https://your-vercel-app.vercel.app'
+  'Access-Control-Allow-Origin': 'https://count-project-eta.vercel.app', // หรือระบุ origin ที่อนุญาตเช่น 'https://your-vercel-app.vercel.app'
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
