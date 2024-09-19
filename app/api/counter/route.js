@@ -1,5 +1,20 @@
 import { NextResponse } from "next/server";
 import pool from "@/app/lib/mysql";
+// pages/api/counter.js
+export default function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    // Handle preflight request
+    res.status(200).end();
+    return;
+  }
+
+  // Handle your GET or POST request
+  res.json({ count: 0 });
+}
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
