@@ -1,18 +1,5 @@
 import { NextResponse } from "next/server";
 import pool from "@/app/lib/mysql";
-export default function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', 'https://count-project-eta.vercel.app'); // หรือกำหนด origin เฉพาะเช่น 'https://example.com'
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  if (req.method === 'OPTIONS') {
-    // พูดคุยกับ browser ว่าอนุญาตหรือไม่
-    return res.status(200).end();
-  }
-
-  // Logic การทำงานของ API
-  res.status(200).json({ message: 'API works!' });
-}
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type');
