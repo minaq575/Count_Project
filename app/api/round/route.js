@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import pool from "@/app/lib/mysql";
+
 export async function GET(request) {
     try {
         const connection = await pool.getConnection();
@@ -13,6 +14,7 @@ export async function GET(request) {
         connection.release();
         return NextResponse.json({ round: rows });
     } catch (error) {
+        
         return NextResponse.json({ error }, { status: 500 });
     }
 }

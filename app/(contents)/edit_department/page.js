@@ -69,12 +69,15 @@ export default function EditAddDepartment() {
 
                 const body = JSON.stringify({ id: facultyId, name: updatedFaculty.name, total: updatedFaculty.total, rname: updatedFaculty.rname });
 
-                const response = await fetch('/api/faculty', {
+                const response = await fetch(`${process.env.NEXTAUTH_URL}/api/faculty`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: body,
+                     agent: new https.Agent({
+        rejectUnauthorized: false // Disable SSL verification for testing
+    }),
                 });
 
                 if (!response.ok) {
