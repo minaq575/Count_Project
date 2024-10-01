@@ -10,7 +10,7 @@ import styles from "@/app/styles/edit.module.css"
 
 export default function EditAddDepartment() {
     const [facultys, setFacultys] = useState([]);
-    const roundOptions = ["รอบเช้าช่วง 1", "รอบเช้าช่วง 2", "รอบบ่ายช่วง 1", "รอบบ่ายช่วง 2"]; // Define your dropdown options here
+    const roundOptions = ["รอบเช้าช่วง 1", "รอบเช้าช่วง 2", "รอบบ่ายช่วง 1", "รอบบ่ายช่วง 2"];  // Define your dropdown options here
     const router = useRouter();
 
     useEffect(() => {
@@ -69,15 +69,12 @@ export default function EditAddDepartment() {
 
                 const body = JSON.stringify({ id: facultyId, name: updatedFaculty.name, total: updatedFaculty.total, rname: updatedFaculty.rname });
 
-                const response = await fetch(`${process.env.NEXTAUTH_URL}/api/faculty`, {
+                const response = await fetch('http://localhost:3000/api/faculty', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: body,
-                     agent: new https.Agent({
-        rejectUnauthorized: false // Disable SSL verification for testing
-    }),
                 });
 
                 if (!response.ok) {

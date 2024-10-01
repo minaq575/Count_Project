@@ -23,7 +23,7 @@ export default function Round() {
 
     const fetchRounds = async () => {
         try {
-            const response = await fetch(`${process.env.NEXTAUTH_URL}/api/round`);
+            const response = await fetch('http://localhost:3000/api/round');
             if (!response.ok) {
                 throw new Error('Failed to fetch rounds');
             }
@@ -53,7 +53,7 @@ export default function Round() {
     const saveRounds = async () => {
         try {
             for (let roundToUpdate of rounds.round) {
-                const response = await fetch(`${process.env.NEXTAUTH_URL}/api/round`, {
+                const response = await fetch('/api/round', {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

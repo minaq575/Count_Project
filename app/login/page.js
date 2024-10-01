@@ -15,13 +15,13 @@ export default function LoginPage() {
     if (status === 'loading') return;
 
     if (session) {
-      router.push('/count');
+      router.push('/faculty');
     }
   }, [session, status, router]);
 
   const handleLogin = async () => {
     try {
-      await signIn("google", { callbackUrl: "/count" });
+      await signIn("google", { callbackUrl: "/faculty" });
     } catch (error) {
       console.error("Unexpected error occurred during sign in:", error);
     }

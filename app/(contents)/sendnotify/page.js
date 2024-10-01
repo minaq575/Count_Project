@@ -53,7 +53,7 @@ export default function SendNotification() {
 
       // ตรวจสอบว่ามีการส่ง Notification แล้วหรือยัง
       if (!notificationSent) {
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/notify`, {
+        const res = await fetch('http://localhost:3000/api/notify', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
