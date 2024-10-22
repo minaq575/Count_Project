@@ -5,7 +5,7 @@ import Footer from "@/app/components/footer_report";
 import getData from '@/app/components/CLUD/get';
 import { useState, useEffect } from 'react';
 
-export default function guestUser() {
+export default function GuestUser() {
     const [R_current, setCurrent] = useState(0);
     const [R_totalSum, setTotal] = useState(0);
     const [R_morning, setMorning] = useState(0);
@@ -152,9 +152,9 @@ export default function guestUser() {
 
                                     return (
                                         <tr key={faculty.idfaculty}>
-                                            <td>{faculty.name}</td>
-                                            <td>{received}</td>
-                                            <td>{remaining}</td>
+                                            <td className={styles.dataFaculty}>{faculty.name}</td>
+                                            <td className={styles.dataFaculty}>{received}</td>
+                                            <td className={styles.dataFaculty}>{remaining}</td>
                                             <td className={styles.percentageGreen} >{percentage}%</td>
                                         </tr>
                                     );

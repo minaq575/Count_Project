@@ -53,7 +53,7 @@ export default function SendNotification() {
 
       // ตรวจสอบว่ามีการส่ง Notification แล้วหรือยัง
       if (!notificationSent) {
-        const res = await fetch('http://localhost:3000/api/notify', {
+        const res = await fetch('/api/notify', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -103,9 +103,11 @@ export default function SendNotification() {
   return (
     <div>
       <MetaRefresh interval="180" />
+      <center>
       <h1>Send Notification</h1>
       {response && <p>Notification sent successfully!</p>}
       {error && <p>Error: {error}</p>}
+      </center>
     </div>
   );
 }
